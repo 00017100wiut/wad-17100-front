@@ -1,59 +1,88 @@
-# 17100Front
+# 🧩 Product Frontend – Angular 19 + Material UI
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.2.
+This is a modern **Angular 19** frontend for managing a list of products through a REST API. It uses **Angular Material** for UI components and consumes an ASP.NET Core Web API for data operations.
 
-## Development server
+## ✨ Features
 
-To start a local development server, run:
+* View product list in a responsive Material table
+* Add new product (create dialog)
+* Edit existing product (edit dialog)
+* Delete product with confirmation
+* Spinner for loading state
+* Styled with Angular Material Design
 
-```bash
-ng serve
+## 🚀 Tech Stack
+
+* Angular 19 (standalone components)
+* Angular Material UI
+* TypeScript
+* RxJS (Observables)
+* SCSS
+
+## 🔗 API Endpoint
+
+Configured to connect to:
+
+```
+http://localhost:5293/api/Products
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Make sure the backend is running before launching the frontend.
 
-## Code scaffolding
+## 📁 Folder Structure (simplified)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```
+src/app/
+├── app.component.ts          # Main logic
+├── app.component.html        # Table and UI
+├── app.component.scss        # Styling
+├── product.service.ts        # API communication
+└── product-dialog.component.ts|html|scss # Dialog for create/edit
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 📦 Setup Instructions
+
+1. **Clone the repo**
 
 ```bash
-ng generate --help
+git clone https://github.com/your-username/angular-product-app.git
+cd angular-product-app
 ```
 
-## Building
-
-To build the project run:
+2. **Install dependencies**
 
 ```bash
-ng build
+npm install
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+3. **Run the app**
 
 ```bash
-ng test
+ng serve -o
 ```
 
-## Running end-to-end tests
+The app will open in your browser at:
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+```
+http://localhost:4200
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## ⚙️ Configuration
 
-## Additional Resources
+Ensure the base API URL in `product.service.ts` matches your backend address:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```ts
+const baseUrl = 'http://localhost:5293/api/';
+```
+
+## 🔐 CORS Note
+
+The backend must allow requests from the Angular dev server:
+
+```csharp
+.WithOrigins("http://localhost:4200")
+```
+
+## 📜 License
+
+MIT
