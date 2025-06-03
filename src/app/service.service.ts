@@ -35,7 +35,7 @@ export class ProductService {
   }
 
   editProduct(item: AddedProduct) {
-    return this.httpClient.put(baseUrl + 'Products/', item);
+    return this.httpClient.put(baseUrl + 'Products', item);
   }
 
   deleteProduct(id: number) {

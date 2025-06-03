@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>{{ data.id === 0 ? "Create" : "Edit" }} Product</h2>
+<div mat-dialog-content class="dialog-form">
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="data.name" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Price</mat-label>
+    <input matInput type="number" [(ngModel)]="data.price" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Details</mat-label>
+    <input matInput [(ngModel)]="data.details" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>SKU</mat-label>
+    <input matInput type="number" [(ngModel)]="data.sku" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="dialogRef.close(data)">
+    Save
+  </button>
+</div>

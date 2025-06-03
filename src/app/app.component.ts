@@ -1,5 +1,4 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -10,16 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { ProductDialogComponent } from './create-edit-dialog/product.component';
-
-const baseUrl = 'https://localhost:7147/api/';
-
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-  details: string;
-  sku: number;
-}
+import { Product, ProductService } from './service.service';
 
 @Component({
   selector: 'app-root',
@@ -40,7 +30,7 @@ export interface Product {
   ],
 })
 export class AppComponent implements OnInit {
-  private http = inject(HttpClient);
+  private productService = inject(ProductService);
   private dialog = inject(MatDialog);
 
   displayedColumns = ['id', 'name', 'price', 'details', 'sku', 'actions'];
@@ -52,7 +42,7 @@ export class AppComponent implements OnInit {
   }
 
   loadProducts(): void {
-    this.http.get<Product[]>(baseUrl + 'products').subscribe({
+    this.productService.getAllProducts().subscribe({
       next: (data) => {
         this.products = data;
         this.loading = false;
@@ -66,7 +56,7 @@ export class AppComponent implements OnInit {
 
   openDialog(product?: Product): void {
     const ref = this.dialog.open(ProductDialogComponent, {
-      width: '400px',
+      width: '500px',
       data: product
         ? { ...product }
         : { id: 0, name: '', price: 0, details: '', sku: 0 },
@@ -75,15 +65,23 @@ export class AppComponent implements OnInit {
     ref.afterClosed().subscribe((result) => {
       if (result) {
         if (result.id === 0) {
-          this.http
-            .post(baseUrl + 'products', result)
+          this.productService
+            .createProduct(result)
             .subscribe(() => this.loadProducts());
         } else {
-          this.http
-            .put(baseUrl + 'products', result)
+          this.productService
+            .editProduct(result)
             .subscribe(() => this.loadProducts());
         }
       }
     });
+  }
+
+  deleteProduct(id: number): void {
+    if (confirm('Are you sure you want to delete this product?')) {
+      this.productService
+        .deleteProduct(id)
+        .subscribe(() => this.loadProducts());
+    }
   }
 }
